@@ -12,7 +12,7 @@ class Post extends Model
     public static function aboutInfo()
     {
         return [
-            'name' => 'sutha',
+            'name' => 'Pasha',
             'bio' => 'Head of pustik UBG'
         ];
     }
