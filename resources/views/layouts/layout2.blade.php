@@ -14,13 +14,33 @@
             background-color: #0008a8;
             color: white;
         }
+        .bbc-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin-top: 10px;
+        }
         .bbc-nav a {
             color: white;
             text-decoration: none;
-            margin-right: 20px;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            padding: 2px 0;
+            position: relative;
         }
         .bbc-nav a:hover {
-            text-decoration: underline;
+            color: #FFD700;
+            text-decoration: none;
+        }
+        .bbc-nav a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #FFD700;
         }
         .news-card {
             border: none;
@@ -41,29 +61,59 @@
             color: white;
             padding: 40px 0;
         }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .search-icon {
+            margin-left: auto;
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            .bbc-nav {
+                gap: 8px 15px;
+                margin-top: 15px;
+            }
+            .bbc-nav a {
+                font-size: 13px;
+            }
+            .header-title {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <header class="bbc-header py-3">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1><i class="fas fa-globe-europe"></i> UBG News</h1>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="bbc-nav">
-                        <a href="#">Home</a>
-                        <a href="#">News</a>
-                        <a href="#">Sport</a>
-                        <a href="#">Business</a>
-                        <a href="#">Innovation</a>
-                        <a href="#">Culture</a>
-                        <a href="#">Travel</a>
-                        <a href="#">Earth</a>
-                        <a href="#">Video</a>
-                        <a href="#">Live</a>
-                        <a href="#"><i class="fas fa-search"></i></a>
+                <div class="col-md-12">
+                    <div class="header-title">
+                        <i class="fas fa-globe-europe"></i>
+                        <span>UBG News</span>
+                        <a href="#" class="search-icon text-white ms-auto">
+                            <i class="fas fa-search"></i>
+                        </a>
                     </div>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <nav class="bbc-nav">
+                        <a href="#">Home</a>
+                        <a href="#">Politik & Hukum</a>
+                        <a href="#">Olahraga</a>
+                        <a href="#">Ekonomi & Bisnis</a>
+                        <a href="#">Lingkungan & Bencana</a>
+                        <a href="#">Hiburan</a>
+                        <a href="#">Kesehatan</a>
+                        <a href="#">Budaya & Pariwisata</a>
+                        <a href="#">Pendidikan</a>
+                        <a href="#">Teknologi & Inovasi</a>
+                        <a href="#">Nasional</a>
+                        <a href="#">Internasional</a>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -78,7 +128,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h5>Explore the BBC</h5>
-                    <p>We’ve updated our Terms of Use and encourage you to read them.</p>
+                    <p>We've updated our Terms of Use and encourage you to read them.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p>&copy; 2026 BBC. The BBC is not responsible for the content of external sites.</p>
