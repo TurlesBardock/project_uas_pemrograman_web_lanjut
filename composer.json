@@ -71,7 +71,11 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "composer/package-versions-deprecated": true
+        },
+        "audit": {
+            "ignore": ["PKSA-yb9k-yqxq-p2zw"]
         }
     },
     "minimum-stability": "stable",
