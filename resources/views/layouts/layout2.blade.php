@@ -93,7 +93,7 @@
                 <div class="col-md-12">
                     <div class="header-title">
                         <i class="fas fa-globe-europe"></i>
-                        <span>UBG News</span>
+                        <span>Bumigora News</span>
                         <a href="#" class="search-icon text-white ms-auto">
                             <i class="fas fa-search"></i>
                         </a>
@@ -127,11 +127,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Explore the BBC</h5>
+                    <h5>Explore the Bumigora News</h5>
                     <p>We've updated our Terms of Use and encourage you to read them.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p>&copy; 2026 BBC. The BBC is not responsible for the content of external sites.</p>
+                    <p>&copy; 2026 Bumigora News. The Bumigora News is not responsible for the content of external sites.</p>
                 </div>
             </div>
         </div>
