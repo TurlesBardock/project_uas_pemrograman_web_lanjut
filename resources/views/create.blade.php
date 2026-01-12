@@ -89,34 +89,31 @@
                         </div>
 
                         <!-- Category -->
-                        <div class="mb-4">
-                            <label for="category" class="form-label fw-bold">
-                                <i class="fas fa-folder me-2 text-primary"></i>
-                                Kategori <span class="text-danger">*</span>
-                            </label>
-                            <select class="form-select @error('category') is-invalid @enderror"
-                                    id="category"
-                                    name="category"
-                                    required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="politik-hukum" {{ old('category') == 'politik-hukum' ? 'selected' : '' }}>Politik & Hukum</option>
-                                <option value="olahraga" {{ old('category') == 'olahraga' ? 'selected' : '' }}>Olahraga</option>
-                                <option value="ekonomi-bisnis" {{ old('category') == 'ekonomi-bisnis' ? 'selected' : '' }}>Ekonomi & Bisnis</option>
-                                <option value="kesehatan" {{ old('category') == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
-                                <option value="teknologi-inovasi" {{ old('category') == 'teknologi-inovasi' ? 'selected' : '' }}>Teknologi & Inovasi</option>
-                                <option value="pendidikan" {{ old('category') == 'pendidikan' ? 'selected' : '' }}>Pendidikan</option>
-                                <option value="hiburan" {{ old('category') == 'hiburan' ? 'selected' : '' }}>Hiburan</option>
-                                <option value="budaya-pariwisata" {{ old('category') == 'budaya-pariwisata' ? 'selected' : '' }}>Budaya & Pariwisata</option>
-                                <option value="nasional" {{ old('category') == 'nasional' ? 'selected' : '' }}>Nasional</option>
-                                <option value="internasional" {{ old('category') == 'internasional' ? 'selected' : '' }}>Internasional</option>
-                                <option value="lingkungan-bencana" {{ old('category') == 'lingkungan-bencana' ? 'selected' : '' }}>Lingkungan & Bencana</option>
-                            </select>
-                            @error('category')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
+                       <div class="mb-4">
+    <label class="form-label fw-bold">
+        <i class="fas fa-folder me-2 text-primary"></i>
+        Kategori <span class="text-danger">*</span>
+    </label>
+
+    <select name="category_id"
+            class="form-select @error('category_id') is-invalid @enderror"
+            required>
+
+        <option value="">Pilih Kategori</option>
+
+        @foreach($categories as $cat)
+            <option value="{{ $cat->id }}"
+                {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                {{ $cat->title }}
+            </option>
+        @endforeach
+    </select>
+
+    @error('category_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
                         <!-- Content -->
                         <div class="mb-4">

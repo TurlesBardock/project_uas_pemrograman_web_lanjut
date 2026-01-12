@@ -4,9 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\NewsCategory;
+
 
 class BlogController extends Controller
 {
+
+    public function create()
+    {
+        $categories = NewsCategory::all();
+        return view('create', compact('categories'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'category_id' => 'required',
+            'image' => 'nullable|image'
+        ]);
+
+        $imageName = null;
+
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->storeAs('posts', $imageName, 'public');
+        }
+
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $imageName,
+            'category_id' => $request->category_id
+        ]);
+
+        return redirect('/');
+    }
+
     public function home(Request $request)
     {
         $search = $request->get('search');
@@ -26,21 +61,18 @@ class BlogController extends Controller
         return view('home', compact('posts', 'totalposts', 'search'));
     }
 
-    public function category($category)
+    public function category($slug)
     {
-        $categoryName = ucwords(str_replace('-', ' ', $category));
+        $category = NewsCategory::where('slug', $slug)->firstOrFail();
 
-        $posts = Post::where('category', $category)
-                    ->where('status', 'published')
-                    ->latest()
-                    ->paginate(9);
+        $posts = Post::where('category_id', $category->id)
+            ->where('status', 'published')
+            ->latest()
+            ->paginate(9);
 
-        $totalPosts = Post::where('category', $category)
-                         ->where('status', 'published')
-                         ->count();
-
-        return view('category', compact('posts', 'categoryName', 'totalPosts'));
+        return view('category', compact('category', 'posts'));
     }
+
 
     public function show($identifier)
     {

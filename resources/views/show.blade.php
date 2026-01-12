@@ -7,9 +7,11 @@
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('/category/' . $post->category) }}">{{ ucwords(str_replace('-', ' ', $post->category)) }}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Artikel</li>
+            <li class="breadcrumb-item">
+    <a href="{{ route('category', $post->category->slug) }}">
+        {{ $post->category->title }}
+    </a>
+</li>
         </ol>
     </nav>
 
@@ -18,7 +20,9 @@
         <div class="col-lg-8">
             <!-- Article Header -->
             <div class="article-header mb-4">
-                <span class="badge bg-primary mb-3">{{ $post->category }}</span>
+                <span class="badge bg-primary mb-3">
+    {{ $post->category->title ?? '-' }}
+    </span>
                 <h1 class="display-5 fw-bold mb-3" style="color: var(--gray-800);">{{ $post->title }}</h1>
 
                 <div class="article-meta d-flex align-items-center mb-4">
@@ -34,22 +38,29 @@
             </div>
 
             <!-- Article Image -->
-            @php
+           @php
                 $categoryImages = [
-                    'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'pendidikan' => 'https://images.unsplash.com/phone-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'internasional' => 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80',
-                    'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'
+                    'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c?auto=format&fit=crop&w=1200&q=80',
+                    'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
+                    'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
+                    'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80',
+                    'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1200&q=80',
+                    'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
+                    'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?auto=format&fit=crop&w=1200&q=80',
+                    'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=80',
+                    'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80',
+                    'internasional' => 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=1200&q=80',
+                    'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
                 ];
-                $imageUrl = $categoryImages[$post->category] ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80';
-            @endphp
+
+                // ambil slug kategori dengan aman
+                $slug = $post->category?->slug;
+
+                // ambil gambar berdasarkan slug
+                $imageUrl = $categoryImages[$slug] 
+                    ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=1200&q=80';
+                @endphp
+
 
             <div class="article-image mb-5">
                 <img src="{{ $imageUrl }}"
@@ -112,11 +123,12 @@
                 </h5>
 
                 @php
-                    $relatedPosts = \App\Models\Post::where('category', $post->category)
-                        ->where('id', '!=', $post->id)
-                        ->latest()
-                        ->take(3)
-                        ->get();
+                $relatedPosts = \App\Models\Post::where('category_id', $post->category_id)
+                    ->where('id', '!=', $post->id)
+                    ->where('status', 'published')
+                    ->latest()
+                    ->take(3)
+                    ->get();
                 @endphp
 
                 @if($relatedPosts->count() > 0)
@@ -165,8 +177,10 @@
                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0">
                         {{ $name }}
                         <span class="badge bg-primary rounded-pill">
-                            {{ \App\Models\Post::where('category', $slug)->count() }}
-                        </span>
+                    {{ \App\Models\Post::whereHas('category', function($q) use ($slug) {
+                        $q->where('slug', $slug);
+                    })->count() }}
+                     </span>
                     </a>
                     @endforeach
                 </div>
