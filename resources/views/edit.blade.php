@@ -9,7 +9,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('post.show', $post->id) }}">Artikel</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('post.show', $post->slug) }}">Artikel</a></li>
             <li class="breadcrumb-item active">Edit</li>
         </ol>
     </nav>
@@ -71,7 +71,7 @@
                         Gunakan preview untuk melihat hasil sebelum menyimpan.</p>
                     </div>
                     <div class="ms-auto">
-                        <a href="{{ route('post.show', $post->id) }}"
+                        <a href="{{ route('post.show', $post->slug) }}"
                            target="_blank"
                            class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-external-link-alt me-1"></i>Preview
@@ -143,30 +143,22 @@
                                 <i class="fas fa-folder me-2 text-primary"></i>
                                 Kategori <span class="text-danger">*</span>
                             </label>
-                            <select class="form-select @error('category') is-invalid @enderror"
-                                    id="category"
-                                    name="category"
+                            <select name="category_id"
+                                    class="form-select"
                                     required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="politik-hukum" {{ old('category', $post->category) == 'politik-hukum' ? 'selected' : '' }}>Politik & Hukum</option>
-                                <option value="olahraga" {{ old('category', $post->category) == 'olahraga' ? 'selected' : '' }}>Olahraga</option>
-                                <option value="ekonomi-bisnis" {{ old('category', $post->category) == 'ekonomi-bisnis' ? 'selected' : '' }}>Ekonomi & Bisnis</option>
-                                <option value="kesehatan" {{ old('category', $post->category) == 'kesehatan' ? 'selected' : '' }}>Kesehatan</option>
-                                <option value="teknologi-inovasi" {{ old('category', $post->category) == 'teknologi-inovasi' ? 'selected' : '' }}>Teknologi & Inovasi</option>
-                                <option value="pendidikan" {{ old('category', $post->category) == 'pendidikan' ? 'selected' : '' }}>Pendidikan</option>
-                                <option value="hiburan" {{ old('category', $post->category) == 'hiburan' ? 'selected' : '' }}>Hiburan</option>
-                                <option value="budaya-pariwisata" {{ old('category', $post->category) == 'budaya-pariwisata' ? 'selected' : '' }}>Budaya & Pariwisata</option>
-                                <option value="nasional" {{ old('category', $post->category) == 'nasional' ? 'selected' : '' }}>Nasional</option>
-                                <option value="internasional" {{ old('category', $post->category) == 'internasional' ? 'selected' : '' }}>Internasional</option>
-                                <option value="lingkungan-bencana" {{ old('category', $post->category) == 'lingkungan-bencana' ? 'selected' : '' }}>Lingkungan & Bencana</option>
+
+                                @foreach(\App\Models\NewsCategory::all() as $cat)
+                                    <option value="{{ $cat->id }}"
+                                        {{ old('category_id', $post->category_id) == $cat->id ? 'selected' : '' }}>
+                                        {{ $cat->title }}
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('category')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
+                            @error('category_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        
                         <!-- Content -->
                         <div class="mb-4">
                             <label for="content" class="form-label fw-bold">
@@ -290,7 +282,7 @@
                                    class="form-control"
                                    id="published_at"
                                    name="published_at"
-                                   value="{{ old('published_at', $post->published_at ? $post->published_at->format('Y-m-d\TH:i') : '') }}">
+                                   value="{{ old('published_at', $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('Y-m-d\TH:i') : '') }}">
                         </div>
 
                         <!-- Revision History -->
@@ -348,10 +340,10 @@
                             </div>
                             <div class="btn-group">
                                 <button type="submit" name="action" value="save_draft" class="btn btn-outline-primary">
-                                    <i class="fas fa-save me-2"></i>Simpan Perubahan
+                                    <i class="fas fa-save me-2"></i> Simpan Draft
                                 </button>
                                 <button type="submit" name="action" value="publish" class="btn btn-primary">
-                                    <i class="fas fa-check-circle me-2"></i>Simpan & Publikasikan
+                                    <i class="fas fa-paper-plane me-2"></i> Publikasikan
                                 </button>
                             </div>
                         </div>

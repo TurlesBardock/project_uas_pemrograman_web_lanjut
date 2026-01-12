@@ -21,7 +21,7 @@
                             <h5>{{ $post->title }}</h5>
                             <p>{{ \Illuminate\Support\Str::limit($post->content, 100) }}</p>
 
-                            <a href="/post/{{ $post->id }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('post.show', $post->slug) }}" class="btn btn-primary">
                                 Read More
                             </a>
                         </div>

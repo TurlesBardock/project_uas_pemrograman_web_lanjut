@@ -12,21 +12,29 @@
 
     <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>Judul</th>
-                <th>Kategori</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-            </tr>
+        <tr>
+            <th>Judul</th>
+            <th>Kategori</th>
+            <th>Status</th>
+            <th>Tanggal</th>
+            <th>Aksi</th>
+        </tr>
         </thead>
+
         <tbody>
             @foreach($posts as $post)
-            <tr>
-                <td>{{ $post->title }}</td>
-                <td>{{ optional($post->category)->title ?? '-' }}</td>
-                <td>{{ $post->status }}</td>
-                <td>{{ $post->created_at->format('d M Y') }}</td>
-            </tr>
+          <tr>
+            <td>{{ $post->title }}</td>
+            <td>{{ optional($post->category)->title ?? '-' }}</td>
+            <td>{{ $post->status }}</td>
+            <td>{{ $post->created_at->format('d M Y') }}</td>
+            <td>
+                <a href="{{ route('post.show', $post->slug) }}" class="btn btn-sm btn-primary">
+                    Edit
+                </a>
+            </td>
+         </tr>
+
             @endforeach
         </tbody>
     </table>

@@ -7,6 +7,13 @@ use App\Models\NewsCategory;
 
 class Post extends Model
 {
+
+    protected $casts = [
+        'published_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     protected $table = 'posts';
     protected $fillable = [
         'title',
@@ -19,10 +26,14 @@ class Post extends Model
         'user_id'
     ];
 
-
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
     public function category()
     {
-        return $this->belongsTo(NewsCategory::class);
+        return $this->belongsTo(\App\Models\NewsCategory::class);
     }
 
     public static function aboutInfo()

@@ -33,7 +33,7 @@
     </div>
 </section>
 
-<!-- Latest Articles Section -->
+<!-- Latest `s Section -->
 <section class="latest-articles mb-5">
     <div class="container">
         <div class="section-header mb-4">
@@ -58,23 +58,21 @@
                         </div>
 
                         @php
-                            // Dummy images based on category
-                            $categoryImages = [
-                                'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'internasional' => 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-                                'umum' => 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'
-                            ];
+                        $categoryImages = [
+                            'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c',
+                            'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211',
+                            'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f',
+                            'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f',
+                            'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176',
+                            'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1',
+                            'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13',
+                            'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216',
+                            'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300',
+                        ];
 
-                            $imageUrl = $categoryImages[$post->category ?? 'umum'] ?? $categoryImages['umum'];
+                        $slug = $post->category?->slug;
+                        $imageUrl = $categoryImages[$slug]
+                            ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1';
                         @endphp
 
                         <img src="{{ $imageUrl }}"
@@ -97,7 +95,7 @@
                         </div>
 
                         <h5 class="card-title mb-3" style="color: var(--gray-800); line-height: 1.4;">
-                            <a href="{{ route('post.show', $post->id) }}" class="text-decoration-none text-dark">
+                            <a href="{{ route('post.show', $post->slug) }}" class="text-decoration-none text-dark">
                                 {{ \Illuminate\Support\Str::limit($post->title, 70) }}
                             </a>
                         </h5>
@@ -108,7 +106,7 @@
 
                         <div class="card-footer bg-transparent border-top-0 px-0 pb-0">
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="{{ route('post.show', $post->id) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('post.show', $post->slug) }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-book-reader me-1"></i> Lihat Selengkapnya
                                 </a>
 

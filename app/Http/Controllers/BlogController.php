@@ -74,12 +74,8 @@ class BlogController extends Controller
     }
 
 
-    public function show($identifier)
+    public function show(Post $post)
     {
-        $post = Post::where('id', $identifier)
-                   ->orWhere('slug', $identifier)
-                   ->firstOrFail();
-
         return view('show', compact('post'));
     }
 

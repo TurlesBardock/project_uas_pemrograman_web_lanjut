@@ -36,7 +36,10 @@
             <!-- Form -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form method="POST" action="{{ route('post.store') }}" id="articleForm">
+                    <form method="POST" 
+                        action="{{ route('post.store') }}" 
+                        id="articleForm"
+                        enctype="multipart/form-data">
                         @csrf
 
                         <!-- Title -->
@@ -90,29 +93,29 @@
 
                         <!-- Category -->
                        <div class="mb-4">
-    <label class="form-label fw-bold">
-        <i class="fas fa-folder me-2 text-primary"></i>
-        Kategori <span class="text-danger">*</span>
-    </label>
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-folder me-2 text-primary"></i>
+                                Kategori <span class="text-danger">*</span>
+                            </label>
 
-    <select name="category_id"
-            class="form-select @error('category_id') is-invalid @enderror"
-            required>
+                            <select name="category_id"
+                                    class="form-select @error('category_id') is-invalid @enderror"
+                                    required>
 
-        <option value="">Pilih Kategori</option>
+                                <option value="">Pilih Kategori</option>
 
-        @foreach($categories as $cat)
-            <option value="{{ $cat->id }}"
-                {{ old('category_id') == $cat->id ? 'selected' : '' }}>
-                {{ $cat->title }}
-            </option>
-        @endforeach
-    </select>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}"
+                                        {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                        {{ $cat->title }}
+                                    </option>
+                                @endforeach
+                            </select>
 
-    @error('category_id')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+                            @error('category_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
 
                         <!-- Content -->

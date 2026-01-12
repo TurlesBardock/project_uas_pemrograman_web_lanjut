@@ -8,8 +8,9 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-    <a href="{{ route('category', $post->category->slug) }}">
-        {{ $post->category->title }}
+        <a href="{{ route('category.show', $post->category->slug) }}">
+        {{ $post->category->name ?? '-' }}
+
     </a>
 </li>
         </ol>
@@ -62,15 +63,30 @@
                 @endphp
 
 
-            <div class="article-image mb-5">
-                <img src="{{ $imageUrl }}"
-                     alt="{{ $post->title }}"
-                     class="img-fluid rounded-3 shadow-sm w-100"
-                     style="max-height: 400px; object-fit: cover;">
+                <div class="article-image mb-5">
+
+                @php
+                    $localImage = $post->image
+                        ? public_path('storage/posts/' . $post->image)
+                        : null;
+                @endphp
+
+                @if($post->image && file_exists($localImage))
+                    <img src="{{ asset('storage/posts/'.$post->image) }}"
+                        alt="{{ $post->title }}"
+                        class="img-fluid rounded-3 shadow-sm w-100"
+                        style="max-height: 400px; object-fit: cover;">
+                @else
+                    <img src="{{ $imageUrl }}"
+                        alt="{{ $post->title }}"
+                        class="img-fluid rounded-3 shadow-sm w-100"
+                        style="max-height: 400px; object-fit: cover;">
+                @endif
+
                 <p class="text-muted text-center mt-2" style="font-size: 0.875rem;">
                     Ilustrasi gambar untuk artikel "{{ $post->title }}"
                 </p>
-            </div>
+                </div>
 
             <!-- Article Content -->
             <div class="article-content mb-5">
@@ -84,8 +100,8 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="tags">
                         <span class="text-muted me-2">Tags:</span>
-                        @foreach(explode(' ', $post->category) as $tag)
-                        <span class="badge bg-light text-dark me-1">{{ $tag }}</span>
+                        @foreach(explode('-', $post->category->slug) as $tag)
+                            <span class="badge bg-light text-dark me-1">{{ $tag }}</span>
                         @endforeach
                         <span class="badge bg-light text-dark me-1">berita</span>
                         <span class="badge bg-light text-dark me-1">terkini</span>
@@ -134,8 +150,8 @@
                 @if($relatedPosts->count() > 0)
                 <div class="list-group">
                     @foreach($relatedPosts as $related)
-                    <a href="{{ route('post.show', $related->id) }}"
-                       class="list-group-item list-group-item-action border-0 shadow-sm mb-2">
+                    <a href="{{ route('post.show', $related->slug) }}"
+                        class="list-group-item list-group-item-action border-0 shadow-sm mb-2">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
                                 <div class="rounded-2 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center"
