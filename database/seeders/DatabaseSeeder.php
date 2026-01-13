@@ -2,20 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /** 
+    /**
      * Seed the application's database.
      */
     public function run(): void
     {
+        // Hanya jalankan seeder dari data SQLite export
         $this->call([
-            CategorySeeder::class,
-            AdminSeeder::class,
+            UsersTableSeeder::class,
+            NewsCategoriesTableSeeder::class,
+            PostsTableSeeder::class,
+            CategoryPostTableSeeder::class,
         ]);
     }
 }
