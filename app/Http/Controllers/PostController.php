@@ -13,7 +13,7 @@ class PostController extends Controller
     // DASHBOARD
     public function admin()
     {
-        $posts = Post::with('category')->latest()->paginate(10);
+        $posts = Post::with('categories')->latest()->paginate(10);
         return view('admin.dashboard', compact('posts'));
     }
 
@@ -29,21 +29,18 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:200',
-            'category_id' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:news_categories,id',
             'content' => 'required|min:100',
             'status' => 'required',
-            'image' => 'nullable|image|max:2048', // 🔥 tambahkan
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        // Buat slug
         $slug = Str::slug($request->title);
         if (Post::where('slug', $slug)->exists()) {
             $slug .= '-' . time();
         }
 
-        // ===============================
-        // HANDLE UPLOAD IMAGE
-        // ===============================
         if ($request->hasFile('image')) {
             $filename = time() . '.' . $request->image->extension();
             $request->image->storeAs('posts', $filename, 'public');
@@ -51,19 +48,18 @@ class PostController extends Controller
             $filename = null;
         }
 
-        // ===============================
-        // SIMPAN KE DATABASE
-        // ===============================
         $post = Post::create([
             'title' => $request->title,
             'slug' => $slug,
-            'category_id' => $request->category_id,
             'content' => $request->content,
             'status' => $request->status,
             'published_at' => $request->status == 'published' ? now() : null,
-            'image' => $filename, // 🔥 ini yang penting
+            'image' => $filename,
             'user_id' => Auth::id(),
         ]);
+
+        // 🔥 INI WAJIB
+        $post->categories()->sync($request->categories);
 
         return redirect()->route('post.show', $post->slug);
     }
@@ -82,7 +78,8 @@ class PostController extends Controller
             'title' => 'required|max:200',
             'content' => 'required|min:100',
             'status' => 'required',
-            'category_id' => 'required',
+            'categories' => 'required|array',
+            'categories.*' => 'exists:news_categories,id',
             'image' => 'nullable|image|max:2048', // 🔥
         ]);
 
@@ -104,13 +101,13 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'slug' => $slug,
-            'category_id' => $request->category_id,
             'content' => $request->content,
             'status' => $status,
             'published_at' => $status == 'published' ? now() : null,
-            'image' => $filename, // 🔥
+            'image' => $filename,
         ]);
 
+        $post->categories()->sync($request->categories);
         return redirect()->route('post.show', $slug)
             ->with('success', 'Artikel diperbarui');
     }

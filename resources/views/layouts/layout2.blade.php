@@ -525,12 +525,6 @@
                             <a href="{{ url('/') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
                         </div>
                         <div class="nav-item">
-                            <a href="{{ url('/category/nasional') }}" class="nav-link {{ request()->is('category/nasional') ? 'active' : '' }}">Nasional</a>
-                        </div>
-                        <div class="nav-item">
-                            <a href="{{ url('/category/internasional') }}" class="nav-link {{ request()->is('category/internasional') ? 'active' : '' }}">Internasional</a>
-                        </div>
-                        <div class="nav-item">
                             <a href="{{ url('/about') }}" class="nav-link {{ request()->is('about') ? 'active' : '' }}">Tentang Kami</a>
                         </div>
                     </nav>
@@ -748,15 +742,6 @@
                     <a href="{{ url('/category/internasional') }}" class="footer-link">
                         <i class="fas fa-globe me-2 text-primary"></i>Internasional
                     </a>
-                    <a href="{{ url('/category/teknologi-inovasi') }}" class="footer-link">
-                        <i class="fas fa-microchip me-2 text-primary"></i>Teknologi
-                    </a>
-                    <a href="{{ url('/category/ekonomi-bisnis') }}" class="footer-link">
-                        <i class="fas fa-chart-line me-2 text-primary"></i>Ekonomi & Bisnis
-                    </a>
-                    <a href="{{ url('/category/politik-hukum') }}" class="footer-link">
-                        <i class="fas fa-balance-scale me-2 text-primary"></i>Politik & Hukum
-                    </a>
                 </div>
 
                 <!-- Tentang & Kontak -->
@@ -764,18 +749,6 @@
                     <h5 class="footer-heading">Tentang Kami</h5>
                     <a href="{{ url('/about') }}" class="footer-link">
                         <i class="fas fa-info-circle me-2 text-primary"></i>Tentang Bumigora News
-                    </a>
-                    <a href="mailto:contact@bumigoranews.com" class="footer-link">
-                        <i class="fas fa-envelope me-2 text-primary"></i>Kontak Kami
-                    </a>
-                    <a href="#" class="footer-link">
-                        <i class="fas fa-file-alt me-2 text-primary"></i>Kebijakan Privasi
-                    </a>
-                    <a href="#" class="footer-link">
-                        <i class="fas fa-shield-alt me-2 text-primary"></i>Disclaimer
-                    </a>
-                    <a href="#" class="footer-link">
-                        <i class="fas fa-copyright me-2 text-primary"></i>Hak Cipta
                     </a>
                 </div>
             </div>

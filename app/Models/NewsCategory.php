@@ -15,4 +15,14 @@ class NewsCategory extends Model
     {
         return $this->hasMany(News::class, 'category_id');
     }
+
+    public function posts()
+    {
+        return $this->belongsToMany(
+            Post::class,
+            'category_post',
+            'news_category_id',
+            'post_id'
+        );
+    }
 }

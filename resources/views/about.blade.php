@@ -22,6 +22,14 @@
                 Portal berita terpercaya yang menyajikan informasi aktual, akurat, dan relevan untuk masyarakat.
                 Kami berkomitmen memberikan konten berkualitas dengan integritas jurnalistik yang tinggi.
             </p>
+                    <p>
+                        Alamat :  Jl. Ismail Marzuki No.22, Cilinaya, Kec. Cakranegara, Kota Mataram, Nusa Tenggara Bar. 83127
+                        <br>
+                        Nomor Telepon : (0370) 633466
+                        <br>
+                        Email : BumigoraNews@gmail.com
+                        </p>
+                    </p>
             <div class="d-flex gap-3">
                 <div class="text-center">
                     <h2 class="fw-bold" style="color: var(--primary-blue);">50+</h2>
@@ -148,7 +156,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('storage/about/pasha.jpeg') }}"
                              alt="Editor in Chief"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
@@ -156,7 +164,7 @@
                             <i class="fas fa-crown text-white"></i>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Ahmad Rizki</h4>
+                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Putu Gunadhi Pasha</h4>
                     <p class="text-primary mb-3">Editor in Chief</p>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         Bertanggung jawab atas kualitas konten dan arah editorial dengan pengalaman 10+ tahun.
@@ -173,7 +181,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('storage/about/Alvin.jpeg') }}"
                              alt="Senior Journalist"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
@@ -181,7 +189,7 @@
                             <i class="fas fa-pen text-white"></i>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Siti Nurhaliza</h4>
+                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">M.Alvin Al Barri</h4>
                     <p class="text-primary mb-3">Senior Journalist</p>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         Spesialis di bidang politik, hukum, dan isu sosial dengan fokus pada investigative reporting.
@@ -198,7 +206,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('storage/about/Alif.jpeg') }}"
                              alt="Tech Editor"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
@@ -206,7 +214,7 @@
                             <i class="fas fa-laptop-code text-white"></i>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Budi Santoso</h4>
+                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Alif Fattah haq</h4>
                     <p class="text-primary mb-3">Tech Editor</p>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         Mengelola konten teknologi, startup, dan inovasi terkini dengan latar belakang engineering.
@@ -223,7 +231,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('storage/about/Rian.jpeg') }}"
                              alt="Multimedia Producer"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
@@ -231,7 +239,7 @@
                             <i class="fas fa-video text-white"></i>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Maya Wulandari</h4>
+                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Rian Alfian</h4>
                     <p class="text-primary mb-3">Multimedia Producer</p>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         Ahli dalam produksi video, podcast, dan konten multimedia untuk platform digital.
@@ -248,15 +256,15 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+                        <img src="{{ asset('storage/about/Syafii.jpg') }}"
                              alt="Data Analyst"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
-                        <div class="position-absolute bottom-0 end-0 bg-danger rounded-circle p-2" style="width: 40px; height: 40px;">
+                        <div class="position-absolute bottom-0 end-0 bg-warning rounded-circle p-2" style="width: 40px; height: 40px;">
                             <i class="fas fa-chart-line text-white"></i>
                         </div>
                     </div>
-                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Rizky Pratama</h4>
+                    <h4 class="fw-bold mb-1" style="color: var(--gray-800);">Syafi'i Maulana</h4>
                     <p class="text-primary mb-3">Data Analyst</p>
                     <p class="text-muted mb-0" style="font-size: 0.9rem;">
                         Menganalisis data pembaca dan tren konten untuk optimasi strategi editorial.
@@ -271,30 +279,7 @@
         </div>
     </div>
 
-    <!-- Contact Info -->
-    <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);">
-        <div class="card-body p-5 text-white">
-            <div class="row align-items-center">
-                <div class="col-lg-8">
-                    <h2 class="fw-bold mb-3">Ingin Bergabung dengan Tim Kami?</h2>
-                    <p class="mb-0 opacity-75">
-                        Kami selalu mencari talenta-talenta baru yang passionate di bidang jurnalistik dan media.
-                        Kirimkan CV dan portofolio Anda untuk kesempatan bergabung.
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end">
-                    <a href="mailto:career@bumigoranews.com"
-                       class="btn btn-light btn-lg px-4">
-                        <i class="fas fa-briefcase me-2"></i>Karir
-                    </a>
-                    <a href="mailto:contact@bumigoranews.com"
-                       class="btn btn-outline-light btn-lg px-4 ms-2">
-                        <i class="fas fa-envelope me-2"></i>Kontak
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Contact Info -->       
 </div>
 
 <style>

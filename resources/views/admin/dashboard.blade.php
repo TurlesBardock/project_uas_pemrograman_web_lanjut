@@ -25,7 +25,11 @@
             @foreach($posts as $post)
           <tr>
             <td>{{ $post->title }}</td>
-            <td>{{ optional($post->category)->title ?? '-' }}</td>
+                <td>
+                    @foreach($post->categories as $cat)
+                        <span class="badge bg-primary me-1">{{ $cat->title }}</span>
+                    @endforeach
+                </td>
             <td>{{ $post->status }}</td>
             <td>{{ $post->created_at->format('d M Y') }}</td>
             <td>

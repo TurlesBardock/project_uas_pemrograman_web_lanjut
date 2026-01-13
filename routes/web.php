@@ -4,22 +4,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 
 // ========================
 // PUBLIC (FRONTEND)
 // ========================
 
-Route::get('/', [BlogController::class, 'home'])->name('home');
+Route::get('/', [BlogController::class, 'index']);
 Route::get('/about', [BlogController::class, 'about'])->name('about');
 
 // Category page
-Route::get('/category/{slug}', [BlogController::class, 'category'])
-    ->name('category.show');
-
-// Article detail
 Route::get('/article/{post:slug}', [BlogController::class, 'show'])
     ->name('post.show');
 
+Route::get('/category/{slug}', [CategoryController::class, 'show'])
+    ->name('category.show');
 
 // ========================
 // AUTH

@@ -8,11 +8,12 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-        <a href="{{ route('category.show', $post->category->slug) }}">
-        {{ $post->category->name ?? '-' }}
-
-    </a>
-</li>
+                 @foreach($post->categories as $cat)
+                    <span class="badge bg-primary me-2">
+                        {{ $cat->title }}
+                    </span>
+                @endforeach
+            </li>
         </ol>
     </nav>
 
@@ -21,9 +22,11 @@
         <div class="col-lg-8">
             <!-- Article Header -->
             <div class="article-header mb-4">
-                <span class="badge bg-primary mb-3">
-    {{ $post->category->title ?? '-' }}
-    </span>
+                {{-- @foreach($post->categories as $cat)
+                    <span class="badge bg-primary me-2">
+                        {{ $cat->title }}
+                    </span>
+                @endforeach --}}
                 <h1 class="display-5 fw-bold mb-3" style="color: var(--gray-800);">{{ $post->title }}</h1>
 
                 <div class="article-meta d-flex align-items-center mb-4">
@@ -65,9 +68,8 @@
                 'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
             ];
 
-                $slug = $post->category?->slug;
-                $imageUrl = $categoryImages[$slug]
-                    ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=1200&q=80';
+                $slug = $post->categories->first()?->slug;
+                $imageUrl = $categoryImages[$slug] ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=1200&q=80';
             @endphp
 
             <img src="{{ $imageUrl }}"
@@ -90,17 +92,11 @@
             </div>
 
             <!-- Article Footer -->
-            <div class="article-footer border-top pt-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="tags">
-                        <span class="text-muted me-2">Tags:</span>
-                        @foreach(explode('-', $post->category->slug) as $tag)
-                            <span class="badge bg-light text-dark me-1">{{ $tag }}</span>
-                        @endforeach
-                        <span class="badge bg-light text-dark me-1">berita</span>
-                        <span class="badge bg-light text-dark me-1">terkini</span>
-                    </div>
-
+                <div class="tags">
+                    <span class="text-muted me-2">Tags:</span>
+                    <span class="badge bg-light text-dark me-1">berita</span>
+                    <span class="badge bg-light text-dark me-1">terkini</span>
+                </div> 
                     <!-- Admin Actions -->
                     @auth
                     <div class="admin-actions">
@@ -133,14 +129,16 @@
                 </h5>
 
                 @php
-                $relatedPosts = \App\Models\Post::whereHas('category', function ($q) use ($post) {
-                        $q->where('id', $post->category_id);
-                    })
-                    ->where('id', '!=', $post->id)
-                    ->where('status', 'published')
-                    ->latest()
-                    ->take(3)
-                    ->get();
+                    $categoryIds = $post->categories->pluck('id');
+
+                    $relatedPosts = \App\Models\Post::whereHas('categories', function ($q) use ($categoryIds) {
+                            $q->whereIn('news_categories.id', $categoryIds);
+                        })
+                        ->where('posts.id', '!=', $post->id)
+                        ->where('status', 'published')
+                        ->latest()
+                        ->take(3)
+                        ->get();
                 @endphp 
 
                 @if($relatedPosts->count() > 0)
@@ -183,15 +181,21 @@
                         'ekonomi-bisnis' => 'Ekonomi & Bisnis',
                         'kesehatan' => 'Kesehatan',
                         'teknologi-inovasi' => 'Teknologi',
-                        'pendidikan' => 'Pendidikan'
+                        'pendidikan' => 'Pendidikan',
+                        'hiburan' => 'Hiburan',
+                        'budaya-pariwisata' => 'Budaya & Pariwisata',
+                        'nasional' => 'Nasional',
+                        'internasional' => 'Internasional',
+                        'lingkungan-bencana' => 'Lingkungan & Bencana',
+                        'opini' => 'Opini'
                     ] as $slug => $name)
-                    <a href="{{ url('/category/' . $slug) }}"
+                    <a href="{{ route('category.show', $slug) }}"
                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0">
                         {{ $name }}
                         <span class="badge bg-primary rounded-pill">
-                        {{ \App\Models\Post::whereHas('category', function ($q) use ($slug) {
-                            $q->where('slug', $slug);
-                        })->where('status', 'published')->count() }}
+                            {{ \App\Models\Post::whereHas('categories', function ($q) use ($slug) {
+                                $q->where('news_categories.slug', $slug);
+                            })->where('status','published')->count() }}
                      </span>
                     </a>
                     @endforeach

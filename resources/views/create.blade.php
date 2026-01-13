@@ -100,21 +100,13 @@
                                 Kategori <span class="text-danger">*</span>
                             </label>
 
-                            <select name="category_id"
-                                    class="form-select @error('category_id') is-invalid @enderror"
-                                    required>
-
-                                <option value="">Pilih Kategori</option>
-
+                            <select name="categories[]" multiple class="form-control" required>
                                 @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}"
-                                        {{ old('category_id') == $cat->id ? 'selected' : '' }}>
-                                        {{ $cat->title }}
-                                    </option>
+                                    <option value="{{ $cat->id }}">{{ $cat->title }}</option>
                                 @endforeach
                             </select>
 
-                            @error('category_id')
+                            @error('categories')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

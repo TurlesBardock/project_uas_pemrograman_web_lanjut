@@ -8,13 +8,6 @@ use App\Models\NewsCategory;
 class Post extends Model
 {
 
-    protected $casts = [
-        'published_at' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    protected $table = 'posts';
     protected $fillable = [
         'title',
         'slug',
@@ -22,25 +15,26 @@ class Post extends Model
         'image',
         'status',
         'published_at',
-        'category_id',
         'user_id'
+    ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
 
     public function getRouteKeyName()
     {
         return 'slug';
     }
-    
-    public function category()
-    {
-        return $this->belongsTo(\App\Models\NewsCategory::class, 'category_id');
-    }
 
-    public static function aboutInfo()
+    // 🔥 Multi-category relation
+    public function categories()
     {
-        return [
-            'name' => 'Pasha',
-            'bio' => 'Head of pustik UBG'
-        ];
+        return $this->belongsToMany(
+            NewsCategory::class,
+            'category_post',
+            'post_id',
+            'news_category_id'
+        );
     }
 }

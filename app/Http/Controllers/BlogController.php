@@ -16,6 +16,24 @@ class BlogController extends Controller
         return view('create', compact('categories'));
     }
 
+    public function index()
+    {
+        $categories = \App\Models\NewsCategory::limit(12)->get();
+
+        $postsByCategory = \App\Models\Post::whereHas('categories', function ($q) use ($categories) {
+            $q->whereIn('news_categories.id', $categories->pluck('id'));
+        })
+            ->where('status', 'published')
+            ->latest()
+            ->get()
+            ->groupBy(function ($post) {
+                return $post->categories->first()?->id;
+            });
+
+        return view('home', compact('categories', 'postsByCategory'));
+    }
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -81,6 +99,34 @@ class BlogController extends Controller
 
     public function about()
     {
-        return view('about');
+        $team = [
+            [
+                'name' => 'Putu Gunadhi Pasha',
+                'role' => 'Editor in Chief',
+                'photo' => 'about/Pasha.jpeg',
+            ],
+            [
+                'name' => 'M. Alvin Al Barri',
+                'role' => 'Journalist',
+                'photo' => 'about/Alvin.jpeg',
+            ],
+            [
+                'name' => 'Alif Fattah Haq',
+                'role' => 'Tech Editor',
+                'photo' => 'about/Alif.jpeg',
+            ],
+            [
+                'name' => 'Rian Alfian',
+                'role' => 'Reporter',
+                'photo' => 'about/Rian.jpeg',
+            ],
+            [
+                'name' => 'Syafii Maulana',
+                'role' => 'Data Analyst',
+                'photo' => 'about/Syafii.jpeg',
+            ],
+        ];
+
+        return view('about', compact('team'));
     }
 }
