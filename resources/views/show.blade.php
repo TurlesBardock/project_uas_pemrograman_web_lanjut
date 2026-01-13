@@ -39,54 +39,48 @@
             </div>
 
             <!-- Article Image -->
-           @php
-                $categoryImages = [
-                    'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c?auto=format&fit=crop&w=1200&q=80',
-                    'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
-                    'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
-                    'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80',
-                    'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1200&q=80',
-                    'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
-                    'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?auto=format&fit=crop&w=1200&q=80',
-                    'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=80',
-                    'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80',
-                    'internasional' => 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=1200&q=80',
-                    'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
-                ];
+           <!-- Article Image -->
+<div class="article-image mb-5">
 
-                // ambil slug kategori dengan aman
+    @if($post->image)
+        {{-- Jika artikel punya gambar upload --}}
+        <img src="{{ asset('storage/posts/'.$post->image) }}"
+             alt="{{ $post->title }}"
+             class="img-fluid w-100 rounded-3"
+             style="max-height: 400px; object-fit: cover;">
+    @else
+        {{-- Jika tidak ada gambar, pakai Unsplash berdasarkan kategori --}}
+        @php
+            $categoryImages = [
+                'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c?auto=format&fit=crop&w=1200&q=80',
+                'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80',
+                'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80',
+                'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80',
+                'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1200&q=80',
+                'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80',
+                'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13?auto=format&fit=crop&w=1200&q=80',
+                'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?auto=format&fit=crop&w=1200&q=80',
+                'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80',
+                'internasional' => 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?auto=format&fit=crop&w=1200&q=80',
+                'lingkungan-bencana' => 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80',
+            ];
+
                 $slug = $post->category?->slug;
-
-                // ambil gambar berdasarkan slug
-                $imageUrl = $categoryImages[$slug] 
+                $imageUrl = $categoryImages[$slug]
                     ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?auto=format&fit=crop&w=1200&q=80';
-                @endphp
+            @endphp
 
+            <img src="{{ $imageUrl }}"
+                alt="{{ $post->title }}"
+                class="img-fluid w-100 rounded-3"
+                style="max-height: 400px; object-fit: cover;">
+        @endif
 
-                <div class="article-image mb-5">
+        <p class="text-muted text-center mt-2" style="font-size: 0.875rem;">
+            Ilustrasi gambar untuk artikel "{{ $post->title }}"
+        </p>
+    </div>
 
-                @php
-                    $localImage = $post->image
-                        ? public_path('storage/posts/' . $post->image)
-                        : null;
-                @endphp
-
-                @if($post->image)
-                    <img src="{{ asset('storage/posts/'.$post->image) }}"
-                        alt="{{ $post->title }}"
-                        class="img-fluid rounded-3 shadow-sm w-100"
-                        style="max-height: 400px; object-fit: cover;">
-                @else
-                    <img src="{{ $imageUrl }}"
-                        alt="{{ $post->title }}"
-                        class="img-fluid rounded-3 shadow-sm w-100"
-                        style="max-height: 400px; object-fit: cover;">
-                @endif
-
-                <p class="text-muted text-center mt-2" style="font-size: 0.875rem;">
-                    Ilustrasi gambar untuk artikel "{{ $post->title }}"
-                </p>
-                </div>
 
             <!-- Article Content -->
             <div class="article-content mb-5">

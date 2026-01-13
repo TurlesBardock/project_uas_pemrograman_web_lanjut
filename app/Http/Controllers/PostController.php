@@ -32,14 +32,28 @@ class PostController extends Controller
             'category_id' => 'required',
             'content' => 'required|min:100',
             'status' => 'required',
+            'image' => 'nullable|image|max:2048', // 🔥 tambahkan
         ]);
 
+        // Buat slug
         $slug = Str::slug($request->title);
-
         if (Post::where('slug', $slug)->exists()) {
             $slug .= '-' . time();
         }
 
+        // ===============================
+        // HANDLE UPLOAD IMAGE
+        // ===============================
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('posts', $filename, 'public');
+        } else {
+            $filename = null;
+        }
+
+        // ===============================
+        // SIMPAN KE DATABASE
+        // ===============================
         $post = Post::create([
             'title' => $request->title,
             'slug' => $slug,
@@ -47,6 +61,7 @@ class PostController extends Controller
             'content' => $request->content,
             'status' => $request->status,
             'published_at' => $request->status == 'published' ? now() : null,
+            'image' => $filename, // 🔥 ini yang penting
             'user_id' => Auth::id(),
         ]);
 
@@ -67,12 +82,21 @@ class PostController extends Controller
             'title' => 'required|max:200',
             'content' => 'required|min:100',
             'status' => 'required',
+            'category_id' => 'required',
+            'image' => 'nullable|image|max:2048', // 🔥
         ]);
 
         $slug = Str::slug($request->title);
-
         if (Post::where('slug', $slug)->where('id', '!=', $post->id)->exists()) {
             $slug .= '-' . time();
+        }
+
+        // Jika user upload gambar baru
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->storeAs('posts', $filename, 'public');
+        } else {
+            $filename = $post->image; // pakai gambar lama
         }
 
         $status = $request->action == 'publish' ? 'published' : 'draft';
@@ -84,11 +108,13 @@ class PostController extends Controller
             'content' => $request->content,
             'status' => $status,
             'published_at' => $status == 'published' ? now() : null,
+            'image' => $filename, // 🔥
         ]);
 
         return redirect()->route('post.show', $slug)
             ->with('success', 'Artikel diperbarui');
     }
+
 
     // DELETE
     public function destroy(Post $post)

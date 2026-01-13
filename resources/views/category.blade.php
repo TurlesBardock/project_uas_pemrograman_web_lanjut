@@ -12,11 +12,11 @@
             @foreach($posts as $post)
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
-
-                        @if($post->image)
-                            <img src="/storage/posts/{{ $post->image }}" class="card-img-top">
-                        @endif
-
+                        <img
+                        src="{{ $post->image
+                            ? asset('storage/posts/' . $post->image)
+                            : 'https://source.unsplash.com/600x400/?news' }}"
+                        class="card-img-top">
                         <div class="card-body">
                             <h5>{{ $post->title }}</h5>
                             <p>{{ \Illuminate\Support\Str::limit($post->content, 100) }}</p>

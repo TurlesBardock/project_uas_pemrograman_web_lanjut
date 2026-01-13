@@ -36,13 +36,15 @@
             <!-- Form -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form method="POST" 
-                        action="{{ route('post.store') }}" 
-                        id="articleForm"
-                        enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
                         @csrf
-
                         <!-- Title -->
+
+                    <div class="mb-3">
+                        <label>Gambar Artikel</label>
+                        <input type="file" name="image" class="form-control">
+                    </div>
+
                         <div class="mb-4">
                             <label for="title" class="form-label fw-bold">
                                 <i class="fas fa-heading me-2 text-primary"></i>
@@ -244,15 +246,6 @@
                                 <div class="image-preview mb-3" id="imagePreview">
                                     <i class="fas fa-image fa-4x text-muted mb-3"></i>
                                     <p class="text-muted">Belum ada gambar yang dipilih</p>
-                                </div>
-                                <input type="file"
-                                       class="form-control"
-                                       id="featured_image"
-                                       name="featured_image"
-                                       accept="image/*"
-                                       onchange="previewImage(this)">
-                                <div class="form-text text-muted">
-                                    Ukuran rekomendasi: 1200x600px. Format: JPG, PNG, GIF. Maks: 2MB.
                                 </div>
                             </div>
                         </div>

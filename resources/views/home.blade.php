@@ -56,32 +56,13 @@
                                 {{ $post->category->title ?? 'Umum' }}
                             </span>
                         </div>
-
-                        @php
-                        $categoryImages = [
-                            'politik-hukum' => 'https://images.unsplash.com/photo-1551135049-8a33b2fb2f5c',
-                            'olahraga' => 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211',
-                            'ekonomi-bisnis' => 'https://images.unsplash.com/photo-1554224155-6726b3ff858f',
-                            'kesehatan' => 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f',
-                            'teknologi-inovasi' => 'https://images.unsplash.com/photo-1518709268805-4e9042af2176',
-                            'pendidikan' => 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1',
-                            'hiburan' => 'https://images.unsplash.com/photo-1489599809516-9827b6d1cf13',
-                            'budaya-pariwisata' => 'https://images.unsplash.com/photo-1523531294919-4bcd7c65e216',
-                            'nasional' => 'https://images.unsplash.com/photo-1511895426328-dc8714191300',
-                        ];
-
-                        $slug = $post->category?->slug;
-                        $imageUrl = $categoryImages[$slug]
-                            ?? 'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1';
-                        @endphp
-
-                        <img src="{{ $imageUrl }}"
-                             alt="{{ $post->title }}"
-                             class="img-fluid w-100 h-100 object-fit-cover"
-                             style="transition: transform 0.5s ease;">
-                        <div class="position-absolute top-0 start-0 w-100 h-100"
-                             style="background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.1) 100%);"></div>
-                    </div>
+                        <img
+                            src="{{ $post->image 
+                                ? asset('storage/posts/'.$post->image) 
+                                : $imageUrl }}"
+                            alt="{{ $post->title }}"
+                            class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start mb-2">
