@@ -12,7 +12,7 @@ class BlogController extends Controller
 
     public function create()
     {
-        $categories = NewsCategory::all();
+        $categories = \App\Models\NewsCategory::all();
         return view('create', compact('categories'));
     }
 

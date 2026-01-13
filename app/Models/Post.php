@@ -33,7 +33,7 @@ class Post extends Model
     
     public function category()
     {
-        return $this->belongsTo(\App\Models\NewsCategory::class);
+        return $this->belongsTo(\App\Models\NewsCategory::class, 'category_id');
     }
 
     public static function aboutInfo()

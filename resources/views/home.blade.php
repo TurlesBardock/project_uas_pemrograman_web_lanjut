@@ -53,7 +53,7 @@
                     <div class="article-image position-relative overflow-hidden" style="height: 200px;">
                         <div class="category-badge position-absolute" style="top: 15px; left: 15px; z-index: 2;">
                             <span class="badge bg-primary">
-                                {{ $post->category ?? 'Umum' }}
+                                {{ $post->category->title ?? 'Umum' }}
                             </span>
                         </div>
 
@@ -113,11 +113,11 @@
                                 <!-- Admin Actions -->
                                 @auth
                                 <div class="admin-actions">
-                                    <a href="{{ route('post.edit', $post->id) }}"
+                                    <a href="{{ route('post.edit', $post->slug) }}"
                                        class="btn btn-sm btn-outline-secondary me-1" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('post.destroy', $post->id) }}"
+                                    <form action="{{ route('post.destroy', $post->slug) }}"
                                           method="POST"
                                           class="d-inline"
                                           onsubmit="return confirm('Yakin ingin menghapus artikel ini?')">

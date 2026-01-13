@@ -3,123 +3,97 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\NewsCategory;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    // DASHBOARD
     public function admin()
     {
         $posts = Post::with('category')->latest()->paginate(10);
         return view('admin.dashboard', compact('posts'));
     }
 
+    // CREATE FORM
     public function create()
     {
         $categories = NewsCategory::all();
         return view('create', compact('categories'));
     }
 
+    // STORE
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => 'required|max:200',
-            'slug' => 'required|unique:posts,slug',
-            'category_id' => 'required|exists:news_categories,id',
-            'content' => 'required|min:300',
-            'status' => 'required|in:draft,published,scheduled',
-            'published_at' => 'nullable|date',
-            'image' => 'nullable|image|max:2048',
+            'category_id' => 'required',
+            'content' => 'required|min:100',
+            'status' => 'required',
         ]);
 
-        // ===============================
-        // HANDLE UPLOAD IMAGE
-        // ===============================
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
+        $slug = Str::slug($request->title);
 
-            // SIMPAN KE storage/app/public/posts
-            $image->storeAs('posts', $filename, 'public');
-        } else {
-            $filename = null;
+        if (Post::where('slug', $slug)->exists()) {
+            $slug .= '-' . time();
         }
 
-        // ===============================
-        // SAVE POST
-        // ===============================
         $post = Post::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => $slug,
             'category_id' => $request->category_id,
             'content' => $request->content,
             'status' => $request->status,
-            'published_at' => $request->status == 'scheduled'
-                ? $request->published_at
-                : ($request->status == 'published' ? now() : null),
-            'image' => $filename,        // 🔥 INI YANG HILANG
+            'published_at' => $request->status == 'published' ? now() : null,
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('post.show', $post->slug)
-            ->with('success', 'Artikel berhasil dibuat!');
+        return redirect()->route('post.show', $post->slug);
     }
 
-
-    public function edit($id)
+    // EDIT
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
         $categories = NewsCategory::all();
         return view('edit', compact('post', 'categories'));
     }
 
-
-    public function update(Request $request, $id)
+    // UPDATE
+    public function update(Request $request, Post $post)
     {
         $request->validate([
             'title' => 'required|max:200',
-            'slug' => 'required|unique:posts,slug,' . $id,
-            'category_id' => 'required|exists:news_categories,id',
-            'content' => 'required|min:300',
-            'status' => 'required|in:draft,published,scheduled,archived',
-            'published_at' => 'nullable|date',
+            'content' => 'required|min:100',
+            'status' => 'required',
         ]);
 
-        $post = Post::findOrFail($id);
+        $slug = Str::slug($request->title);
 
-        // default dari form
-        $status = $request->status;
-
-        // override dari tombol
-        if ($request->action === 'publish') {
-            $status = 'published';
+        if (Post::where('slug', $slug)->where('id', '!=', $post->id)->exists()) {
+            $slug .= '-' . time();
         }
 
-        if ($request->action === 'save_draft') {
-            $status = 'draft';
-        }
+        $status = $request->action == 'publish' ? 'published' : 'draft';
 
         $post->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => $slug,
             'category_id' => $request->category_id,
             'content' => $request->content,
             'status' => $status,
-            'published_at' => $status === 'published' ? now() : null,
+            'published_at' => $status == 'published' ? now() : null,
         ]);
 
-        return redirect()
-            ->route('post.show', $post->slug)
-            ->with('success', 'Artikel berhasil diperbarui!');
+        return redirect()->route('post.show', $slug)
+            ->with('success', 'Artikel diperbarui');
     }
 
-
-    public function destroy($id)
+    // DELETE
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
         $post->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Artikel berhasil dihapus!');
+        return redirect()->route('admin.dashboard');
     }
 }

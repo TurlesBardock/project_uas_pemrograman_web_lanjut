@@ -83,7 +83,7 @@
             <!-- Form -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <form method="POST" action="{{ route('post.update', $post->id) }}" id="editForm">
+                    <form method="POST" action="{{ route('post.update', $post->slug) }}">
                         @csrf
                         @method('PUT')
 
@@ -379,7 +379,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-2"></i>Batal
                 </button>
-                <form action="{{ route('post.destroy', $post->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('post.destroy', $post->slug) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">

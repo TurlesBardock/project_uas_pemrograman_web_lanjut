@@ -71,7 +71,7 @@
                         : null;
                 @endphp
 
-                @if($post->image && file_exists($localImage))
+                @if($post->image)
                     <img src="{{ asset('storage/posts/'.$post->image) }}"
                         alt="{{ $post->title }}"
                         class="img-fluid rounded-3 shadow-sm w-100"
@@ -110,11 +110,11 @@
                     <!-- Admin Actions -->
                     @auth
                     <div class="admin-actions">
-                        <a href="{{ route('post.edit', $post->id) }}"
+                        <a href="{{ route('post.edit', $post->slug) }}"
                            class="btn btn-outline-primary btn-sm me-2">
                             <i class="fas fa-edit me-1"></i> Edit
                         </a>
-                        <form action="{{ route('post.destroy', $post->id) }}"
+                        <form action="{{ route('post.destroy', $post->slug) }}"
                               method="POST"
                               class="d-inline"
                               onsubmit="return confirm('Yakin ingin menghapus artikel ini?')">
@@ -139,13 +139,15 @@
                 </h5>
 
                 @php
-                $relatedPosts = \App\Models\Post::where('category_id', $post->category_id)
+                $relatedPosts = \App\Models\Post::whereHas('category', function ($q) use ($post) {
+                        $q->where('id', $post->category_id);
+                    })
                     ->where('id', '!=', $post->id)
                     ->where('status', 'published')
                     ->latest()
                     ->take(3)
                     ->get();
-                @endphp
+                @endphp 
 
                 @if($relatedPosts->count() > 0)
                 <div class="list-group">
@@ -193,9 +195,9 @@
                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border-0">
                         {{ $name }}
                         <span class="badge bg-primary rounded-pill">
-                    {{ \App\Models\Post::whereHas('category', function($q) use ($slug) {
-                        $q->where('slug', $slug);
-                    })->count() }}
+                        {{ \App\Models\Post::whereHas('category', function ($q) use ($slug) {
+                            $q->where('slug', $slug);
+                        })->where('status', 'published')->count() }}
                      </span>
                     </a>
                     @endforeach

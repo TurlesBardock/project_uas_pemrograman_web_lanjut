@@ -45,12 +45,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post', [PostController::class, 'store'])
         ->name('post.store');
 
-    Route::get('/post/{post}/edit', [PostController::class, 'edit'])
+    Route::get('/post/{post:slug}/edit', [PostController::class, 'edit'])
         ->name('post.edit');
 
-    Route::put('/post/{post}', [PostController::class, 'update'])
+    Route::put('/post/{post:slug}', [PostController::class, 'update'])
         ->name('post.update');
 
-    Route::delete('/post/{post}', [PostController::class, 'destroy'])
+    Route::delete('/post/{post:slug}', [PostController::class, 'destroy'])
         ->name('post.destroy');
 });
