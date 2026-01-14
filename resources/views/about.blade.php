@@ -156,7 +156,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="card border-0 shadow-sm text-center p-4 h-100">
                     <div class="position-relative mb-3">
-                        <img src="{{ asset('storage/about/pasha.jpeg') }}"
+                        <img src="{{ asset('storage/about/Pasha.jpeg') }}"
                              alt="Editor in Chief"
                              class="rounded-circle mx-auto"
                              style="width: 120px; height: 120px; object-fit: cover;">
