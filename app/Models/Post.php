@@ -22,6 +22,8 @@ class Post extends Model
         'published_at' => 'datetime',
     ];
 
+    protected $guarded = [];
+
     public function getRouteKeyName()
     {
         return 'slug';
