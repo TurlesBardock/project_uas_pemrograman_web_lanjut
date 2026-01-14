@@ -18,6 +18,8 @@ class Post extends Model
         'user_id'
     ];
 
+    protected $guarded = [];
+
     protected $casts = [
         'published_at' => 'datetime',
     ];
